@@ -48,7 +48,7 @@ This project is a simple implementation of the classic Pong game built using Rea
     npm run dev
     ```
 
-5. Open your browser and navigate to `http://localhost:3000` to play the game.
+5. Open your browser and navigate to `http://localhost:5173` to play the game.
 
 ## Usage
 
