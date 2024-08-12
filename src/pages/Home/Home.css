@@ -1,0 +1,29 @@
+.home {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    width: 100%;
+    height: 100vh;
+    background-image: url('../../assets/Arcade.jpg');
+    background-size: cover;
+}
+
+.title {
+    font-family: 'Jenna Sue';
+    font-size: 4rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    color: #ffd4e3;
+    text-shadow: 0 0 10px #b8014d, 0 0 20px #b8014d, 0 0 30px #b8014d,
+        0 0 40px #b8014d, 0 0 60px #b8014d, 0 0 70px #b8014d, 0 0 100px #b8014d;
+    height: 40%;
+    display: flex;
+    align-items: flex-end;
+}
+
+.gameButton {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
