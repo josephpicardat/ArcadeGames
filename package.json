@@ -2,7 +2,7 @@
     "name": "arcadegames",
     "private": true,
     "version": "0.0.0",
-    "homepage": "https://gitname.github.io/arcadegames",
+    "homepage": "https://josephpicardat.github.io/ArcadeGames/",
     "type": "module",
     "scripts": {
         "dev": "vite",
@@ -10,7 +10,7 @@
         "lint": "eslint .",
         "preview": "vite preview",
         "predeploy": "npm run build",
-        "deploy": "gh-pages -d build"
+        "deploy": "gh-pages -d dist"
     },
     "dependencies": {
         "@emotion/react": "^11.13.0",
