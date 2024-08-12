@@ -19,7 +19,7 @@ This project is a simple implementation of the classic Pong game built using Rea
 -   Paddle and ball movement.
 -   Score tracking and display.
 -   Overlay to indicate the winner and provide a "Play Again" option.
--   Game restarts after a player wins.
+-   The game restarts after a player wins.
 -   Responsive layout using percentage-based dimensions.
 
 ## Installation
@@ -27,13 +27,13 @@ This project is a simple implementation of the classic Pong game built using Rea
 1. Clone the repository to your local machine:
 
     ```bash
-    git clone https://github.com/yourusername/pong-game.git
+    git clone https://github.com/yourusername/ArcadeGames.git
     ```
 
 2. Navigate to the project directory:
 
     ```bash
-    cd pong-game
+    cd ArcadeGames
     ```
 
 3. Install the dependencies:
