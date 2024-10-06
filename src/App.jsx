@@ -15,6 +15,10 @@ const MainRoutes = () => {
         <Routes>
             <Route path='/' element={<Layout content='home' />} />
             <Route path='/pong' element={<Layout content='pong' />} />
+            <Route
+                path='/phaserTutorial'
+                element={<Layout content='phaserTest' />}
+            />
         </Routes>
     );
 };

@@ -17,16 +17,19 @@
         "@emotion/styled": "^11.13.0",
         "@mui/icons-material": "^5.16.7",
         "@mui/material": "^5.16.7",
+        "phaser": "^3.80.1",
         "radash": "^12.1.0",
         "react": "^18.3.1",
         "react-dom": "^18.3.1",
-        "react-router-dom": "^6.26.0"
+        "react-router-dom": "^6.26.0",
+        "webfontloader": "^1.6.28"
     },
     "devDependencies": {
         "@eslint/js": "^9.8.0",
         "@types/react": "^18.3.3",
         "@types/react-dom": "^18.3.0",
         "@vitejs/plugin-react": "^4.3.1",
+        "concurrently": "^9.0.1",
         "eslint": "^9.8.0",
         "eslint-plugin-react": "^7.35.0",
         "eslint-plugin-react-hooks": "^5.1.0-rc.0",

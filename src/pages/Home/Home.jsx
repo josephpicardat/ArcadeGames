@@ -94,8 +94,16 @@ const Home = () => {
                     >
                         Pong
                     </MenuItem>
+                    <MenuItem
+                        onClick={handleClose}
+                        disableRipple
+                        component={Link}
+                        to='/phaserTutorial'
+                    >
+                        Phaser Tutorial
+                    </MenuItem>
                 </StyledMenu>
-            </div>{' '}
+            </div>
         </div>
     );
 };
