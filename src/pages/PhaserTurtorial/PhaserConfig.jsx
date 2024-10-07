@@ -14,6 +14,7 @@ const PhaserConfig = () => {
         parent: 'phaser-container',
         width: '100%',
         height: '100%',
+        transparent: true,
         scene: [TitleScreen, Game, GameBackground, GameOver],
         physics: {
             default: 'arcade',

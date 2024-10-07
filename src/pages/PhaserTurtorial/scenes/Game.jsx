@@ -20,6 +20,9 @@ export default class Game extends Phaser.Scene {
         this.leftScore = 0;
         this.rightScore = 0;
 
+        this.speed = 310;
+        this.hit = 0;
+
         this.paused = false;
     }
 
@@ -31,6 +34,8 @@ export default class Game extends Phaser.Scene {
     create() {
         this.scene.run('gameBackground');
         this.scene.sendToBack('gameBackground');
+
+        this.cameras.main.setBackgroundColor('rgba(0, 0, 0, 0)');
 
         // Get the canvas dimensions
         const canvasWidth = this.cameras.main.width + 200;
@@ -157,7 +162,9 @@ export default class Game extends Phaser.Scene {
         const angle = (hitPosition / (paddle.height / 2)) * 75; // Scale the angle (75 degrees max)
 
         // Determine the new Y velocity based on the hit position
-        const speed = 310; // Maintain the same speed
+        this.hit += 1;
+        const speed = this.speed + this.hit * 10;
+
         let velocityY = speed * Math.sin(Phaser.Math.DegToRad(angle));
         // Set the new velocity based on which paddle was hit
         if (paddle === this.paddleLeft) {
@@ -259,6 +266,9 @@ export default class Game extends Phaser.Scene {
             this.cameras.main.width * 0.5,
             this.cameras.main.height * 0.5
         );
+
+        this.hit = 0;
+
         // Randomly choose to start from the left or right
         const startFromLeft = Math.random() < 0.5;
 
