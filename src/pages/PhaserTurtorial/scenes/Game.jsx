@@ -13,17 +13,18 @@ export default class Game extends Phaser.Scene {
         super({ key: 'game' });
     }
 
-    init() {
+    init(data) {
         this.gameState = GameState.Running;
         this.paddleRightVelocity = new Phaser.Math.Vector2(0, 0);
 
         this.leftScore = 0;
         this.rightScore = 0;
 
-        this.speed = 310;
-        this.hit = 0;
+        this.speed = 300;
 
         this.paused = false;
+
+        this.aiSpeed = data.aiSpeed;
     }
 
     preload() {
@@ -121,10 +122,12 @@ export default class Game extends Phaser.Scene {
         this.time.delayedCall(1000, () => {
             this.resetBall();
         });
+
+        this.createPauseButton();
     }
 
     update() {
-        if (this.gameState !== GameState.Running) {
+        if (this.paused || this.gameState !== GameState.Running) {
             return;
         }
 
@@ -161,16 +164,22 @@ export default class Game extends Phaser.Scene {
         // Calculate angle based on hit position
         const angle = (hitPosition / (paddle.height / 2)) * 75; // Scale the angle (75 degrees max)
 
-        // Determine the new Y velocity based on the hit position
-        this.hit += 1;
-        const speed = this.speed + this.hit * 10;
+        const speedIncrement = 10; // Adjust this value to control speed increase
+        const maxSpeed = 1000; // Set a maximum speed limit
 
-        let velocityY = speed * Math.sin(Phaser.Math.DegToRad(angle));
+        // Calculate the new speed
+        this.speed = Phaser.Math.Clamp(
+            this.speed + speedIncrement,
+            0,
+            maxSpeed
+        );
+
+        let velocityY = this.speed * Math.sin(Phaser.Math.DegToRad(angle));
         // Set the new velocity based on which paddle was hit
         if (paddle === this.paddleLeft) {
-            ball.body.setVelocity(speed, velocityY); // Right direction
+            ball.body.setVelocity(this.speed, velocityY); // Right direction
         } else if (paddle === this.paddleRight) {
-            ball.body.setVelocity(-speed, velocityY); // Left direction
+            ball.body.setVelocity(-this.speed, velocityY); // Left direction
         }
     }
 
@@ -181,7 +190,7 @@ export default class Game extends Phaser.Scene {
             return;
         }
 
-        const aiSpeed = 1;
+        const aiSpeed = this.aiSpeed;
         if (diff < 0) {
             // Ball is above the paddle
             this.paddleRightVelocity.y = -aiSpeed;
@@ -231,7 +240,7 @@ export default class Game extends Phaser.Scene {
             this.incrementLeftScore();
         }
 
-        const maxScore = 5;
+        const maxScore = 21;
         if (this.leftScore === maxScore) {
             this.gameState = GameState.PlayerWon;
         } else if (this.rightScore === maxScore) {
@@ -268,6 +277,7 @@ export default class Game extends Phaser.Scene {
         );
 
         this.hit = 0;
+        this.speed = 300;
 
         // Randomly choose to start from the left or right
         const startFromLeft = Math.random() < 0.5;
@@ -283,5 +293,26 @@ export default class Game extends Phaser.Scene {
         const vec = this.physics.velocityFromAngle(angle, 400);
 
         this.ball.body.setVelocity(vec.x, vec.y);
+    }
+
+    createPauseButton() {
+        // Pause Button
+        const pauseButton = document.createElement('div');
+        pauseButton.className = 'button';
+        pauseButton.innerText = 'Pause';
+
+        this.add
+            .dom(0, 0, pauseButton, { fontFamily: '"Press Start 2P"' })
+            .addListener('click')
+            .on('click', () => {
+                console.log('Button clicked');
+                this.scene.get('game').scene.pause(); // Pauses the game
+                this.scene.launch('pause');
+            });
+
+        // Ensure the button is dynamically sized and positioned in the top-right corner
+        pauseButton.style.position = 'absolute';
+        pauseButton.style.top = '20px';
+        pauseButton.style.right = '-70px';
     }
 }

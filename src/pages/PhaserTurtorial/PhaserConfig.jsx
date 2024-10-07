@@ -5,6 +5,7 @@ import TitleScreen from './scenes/TitleScreen';
 import Game from './scenes/Game';
 import GameBackground from './scenes/GameBackground';
 import GameOver from './scenes/GameOver';
+import PauseScene from './scenes/PauseScene';
 
 import './Phaser.css';
 
@@ -15,7 +16,7 @@ const PhaserConfig = () => {
         width: '100%',
         height: '100%',
         transparent: true,
-        scene: [TitleScreen, Game, GameBackground, GameOver],
+        scene: [TitleScreen, Game, GameBackground, GameOver, PauseScene],
         physics: {
             default: 'arcade',
             arcade: {
@@ -25,6 +26,9 @@ const PhaserConfig = () => {
         scale: {
             mode: Phaser.Scale.RESIZE, // or Phaser.Scale.FIT
             autoCenter: Phaser.Scale.CENTER_BOTH,
+        },
+        dom: {
+            createContainer: true,
         },
     };
 
