@@ -9,9 +9,11 @@ const Layout = ({ content }) => {
                 display: 'flex',
                 flexDirection: 'column',
                 minHeight: '100vh',
-            }}
-        >
-            <Main content={content} style={{ flex: 1 }} />
+            }}>
+            <Main
+                content={content}
+                style={{ flex: 1 }}
+            />
             <Footer content={content} />
         </div>
     );

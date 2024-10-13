@@ -9,8 +9,7 @@ const SimpleFooter = () => {
                 width: '100%',
                 backgroundColor: 'black',
                 zIndex: '5',
-            }}
-        >
+            }}>
             <div style={{ display: 'flex', width: '35%', margin: 'auto' }}>
                 <ul
                     style={{
@@ -20,13 +19,14 @@ const SimpleFooter = () => {
                         padding: '.8em',
                         margin: 'auto',
                         justifyContent: 'center',
-                    }}
-                >
+                    }}>
                     <li style={{ margin: '0 1rem' }}>
                         <Link
                             to='/'
-                            style={{ textDecoration: 'none', color: '#cccccc' }}
-                        >
+                            style={{
+                                textDecoration: 'none',
+                                color: '#cccccc',
+                            }}>
                             Home
                         </Link>
                     </li>

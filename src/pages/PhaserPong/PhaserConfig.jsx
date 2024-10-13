@@ -1,4 +1,4 @@
-import React from 'react';
+import { useEffect, useRef } from 'react';
 import Phaser from 'phaser';
 import GameComponent from './GameComponent';
 import TitleScreen from './scenes/TitleScreen';
@@ -39,8 +39,33 @@ const PhaserConfig = () => {
         });
     }
 
+    const containerRef = useRef(null);
+
+    useEffect(() => {
+        const container = containerRef.current;
+        if (container) {
+            // You can now access the container dimensions or manipulate it
+            let width = container.offsetWidth;
+            let height = container.offsetHeight;
+
+            // Ensure both width and height are even
+            if (width % 2 !== 0) {
+                width -= 1; // Make the width even
+            }
+            if (height % 2 !== 0) {
+                height -= 1; // Make the height even
+            }
+
+            // Apply the updated width and height to the container
+            container.style.width = `${width}px`;
+            container.style.height = `${height}px`;
+        }
+    }, []);
+
     return (
-        <div className='game-container'>
+        <div
+            className='game-container'
+            ref={containerRef}>
             <GameComponent config={config} />
         </div>
     );

@@ -13,11 +13,21 @@ const App = () => {
 const MainRoutes = () => {
     return (
         <Routes>
-            <Route path='/' element={<Layout content='home' />} />
-            <Route path='/pong' element={<Layout content='pong' />} />
             <Route
-                path='/phaserTutorial'
+                path='/'
+                element={<Layout content='home' />}
+            />
+            <Route
+                path='/pong'
+                element={<Layout content='pong' />}
+            />
+            <Route
+                path='/phaserPong'
                 element={<Layout content='phaserTest' />}
+            />
+            <Route
+                path='/snake'
+                element={<Layout content='snake' />}
             />
         </Routes>
     );

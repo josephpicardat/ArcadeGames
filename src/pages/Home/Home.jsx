@@ -73,8 +73,7 @@ const Home = () => {
                     disableElevation
                     onClick={handleClick}
                     endIcon={<KeyboardArrowDownIcon />}
-                    sx={{ width: '10%' }}
-                >
+                    sx={{ width: '10%' }}>
                     Games
                 </Button>
                 <StyledMenu
@@ -84,23 +83,20 @@ const Home = () => {
                     }}
                     anchorEl={anchorEl}
                     open={open}
-                    onClose={handleClose}
-                >
+                    onClose={handleClose}>
                     <MenuItem
                         onClick={handleClose}
                         disableRipple
                         component={Link}
-                        to='/pong'
-                    >
-                        Pong
+                        to='/phaserPong'>
+                        Phaser Pong
                     </MenuItem>
                     <MenuItem
                         onClick={handleClose}
                         disableRipple
                         component={Link}
-                        to='/phaserTutorial'
-                    >
-                        Phaser Tutorial
+                        to='/snake'>
+                        Snake
                     </MenuItem>
                 </StyledMenu>
             </div>

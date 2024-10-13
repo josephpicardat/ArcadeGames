@@ -4,7 +4,8 @@ import SimpleFooter from '../SimpleFooter';
 
 const routeToFooter = {
     '/pong': SimpleFooter,
-    '/phaserTutorial': SimpleFooter,
+    '/phaserPong': SimpleFooter,
+    '/snake': SimpleFooter,
 };
 
 const Footer = () => {
