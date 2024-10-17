@@ -67,7 +67,7 @@ export default class TitleScreen extends Phaser.Scene {
         this.add
             .dom(x, y, buttonContainer, {
                 fontFamily: '"Press Start 2P"',
-                width: '80%',
+                width: '90%',
             })
             .setOrigin(0.5, 0.5);
     }

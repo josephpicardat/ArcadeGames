@@ -240,7 +240,7 @@ export default class Game extends Phaser.Scene {
             this.incrementLeftScore();
         }
 
-        const maxScore = 21;
+        const maxScore = 11;
         if (this.leftScore === maxScore) {
             this.gameState = GameState.PlayerWon;
         } else if (this.rightScore === maxScore) {
@@ -305,7 +305,6 @@ export default class Game extends Phaser.Scene {
             .dom(0, 0, pauseButton, { fontFamily: '"Press Start 2P"' })
             .addListener('click')
             .on('click', () => {
-                console.log('Button clicked');
                 this.scene.get('game').scene.pause(); // Pauses the game
                 this.scene.launch('pause');
             });
@@ -313,6 +312,7 @@ export default class Game extends Phaser.Scene {
         // Ensure the button is dynamically sized and positioned in the top-right corner
         pauseButton.style.position = 'absolute';
         pauseButton.style.top = '20px';
-        pauseButton.style.right = '-70px';
+        pauseButton.style.right = '-40px';
+        pauseButton.style.width = 'fit-content';
     }
 }

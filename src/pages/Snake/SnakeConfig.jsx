@@ -3,8 +3,8 @@ import Phaser from 'phaser';
 import TitleScreen from './scenes/TitleScreen';
 import Game from './scenes/Game';
 import GameBackground from './scenes/GameBackground';
-// import GameOver from './scenes/GameOver';
-// import PauseScene from './scenes/PauseScene';
+import GameOver from './scenes/GameOver';
+import PauseScene from './scenes/PauseScene';
 
 import './Snake.css';
 
@@ -37,7 +37,13 @@ const SnakeConfig = () => {
                 parent: container,
                 width: canvasWidth,
                 height: canvasHeight,
-                scene: [TitleScreen, Game, GameBackground],
+                scene: [
+                    TitleScreen,
+                    Game,
+                    GameBackground,
+                    PauseScene,
+                    GameOver,
+                ],
                 transparent: true,
                 physics: {
                     default: 'arcade',

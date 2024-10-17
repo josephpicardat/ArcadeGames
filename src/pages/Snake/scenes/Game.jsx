@@ -1,6 +1,5 @@
 import Phaser from 'phaser';
 import WebFontFile from '../../PhaserPong/scenes/WebFontFile';
-import * as Colors from '../../PhaserPong/scenes//Colors';
 
 const GameState = {
     Running: 'running',
@@ -23,6 +22,7 @@ export default class Game extends Phaser.Scene {
         this.moving = false; // Indicates if the snake is moving
         this.numBoxesX = 0;
         this.numBoxesY = 0;
+        this.paused = false;
     }
 
     preload() {
@@ -34,13 +34,40 @@ export default class Game extends Phaser.Scene {
         this.scene.run('gameBackground');
         this.scene.sendToBack('gameBackground');
 
+        // Get the canvas dimensions
+        const canvasWidth = this.cameras.main.width;
+        const canvasHeight = this.cameras.main.height;
+
+        // Calculate the number of boxes that fit horizontally and vertically
+        this.numBoxesX = Math.floor(
+            (canvasWidth - this.padding * 2) / this.boxSize
+        ); // Columns
+        this.numBoxesY = Math.floor(
+            (canvasHeight - this.padding * 2) / this.boxSize
+        ); // Rows
+
+        const worldWidth = this.numBoxesX * this.boxSize;
+        const worldHeight = this.numBoxesY * this.boxSize;
+
+        // Set world bounds based on the grid
+        this.physics.world.setBounds(
+            this.padding,
+            this.padding,
+            worldWidth,
+            worldHeight
+        );
+
+        // Center of canvas
+        const centerX = canvasWidth / 2 - this.boxSize;
+        const centerY = canvasHeight / 2 - this.boxSize;
+
         // Initialize the snake with 3 segments
         for (let i = 0; i < 3; i++) {
             this.snake.push(
                 this.add
                     .rectangle(
-                        this.padding + this.boxSize * i,
-                        this.padding + this.boxSize,
+                        centerX - this.boxSize * i,
+                        centerY - 8,
                         this.boxSize,
                         this.boxSize,
                         0xfeca9b, // Snake color
@@ -50,30 +77,51 @@ export default class Game extends Phaser.Scene {
             );
         }
 
-        const canvasWidth = this.cameras.main.width;
-        const canvasHeight = this.cameras.main.height;
-
-        const numBoxesX = Math.floor(canvasWidth / this.boxSize); // Number of boxes that fit horizontally
-        const numBoxesY = Math.floor(canvasHeight / this.boxSize); // Number of boxes that fit vertically
-        this.numBoxesX = numBoxesX;
-        this.numBoxesY = numBoxesY;
+        // Add physics to each snake segment
+        this.snake.forEach((segment, index) => {
+            this.physics.add.existing(segment);
+            segment.body.setCollideWorldBounds(true); // Enable world bounds collision
+            if (index === 0) {
+                segment.body.onWorldBounds = true;
+            }
+        });
 
         // Input handling for snake movement
         this.input.keyboard.on('keydown', this.handleKeyDown, this);
 
-        // Update snake movement
+        // Start the snake movement timer
         this.time.addEvent({
-            delay: 150, // Move every 200 milliseconds
+            delay: 150, // Move every 150 milliseconds
             callback: this.moveSnake,
             callbackScope: this,
             loop: true,
         });
 
+        // Handle ESC key press to pause the game
+        this.input.keyboard.on('keydown-ESC', this.handlePauseToggle, this);
+
         this.snakeFood();
+        this.createPauseButton();
+    }
+
+    update() {
+        // Handle additional game logic like eating food and growing the snake
+        const head = this.snake[0];
+
+        // Check if snake eats the food
+        if (head.x === this.food.x && head.y === this.food.y) {
+            this.snake.push(this.food); // Grow snake by adding food as a new segment
+            this.snakeFood(); // Create new food
+        }
+    }
+
+    handlePauseToggle() {
+        this.scene.get('game').scene.pause(); // Pauses the game
+        this.scene.launch('pause');
     }
 
     handleKeyDown(event) {
-        // Store the direction change in the queue
+        // Queue direction changes, but prevent reversing into the opposite direction
         switch (event.key) {
             case 'ArrowUp':
                 if (this.direction.y === 0)
@@ -95,64 +143,63 @@ export default class Game extends Phaser.Scene {
     }
 
     moveSnake() {
-        // If the snake is already moving, return
         if (this.moving) return;
 
-        // Set moving flag to true
         this.moving = true;
 
-        // Check for direction changes in the queue
+        // Apply direction change if present
         if (this.directionQueue.length > 0) {
-            const newDirection = this.directionQueue.shift(); // Get the next direction from the queue
-            this.direction = newDirection; // Update the current direction
+            const newDirection = this.directionQueue.shift();
+            this.direction = newDirection;
         }
 
-        // Calculate new position for the head of the snake
+        // Calculate new head position
         const headX = this.snake[0].x + this.direction.x * this.boxSize;
         const headY = this.snake[0].y + this.direction.y * this.boxSize;
 
-        // Check for collision with the boundaries
+        // Check for collision with world bounds
         if (
             headX < this.padding ||
-            headX >= this.cameras.main.width - this.padding ||
+            headX >= this.padding + this.numBoxesX * this.boxSize ||
             headY < this.padding ||
-            headY >= this.cameras.main.height - this.padding
+            headY >= this.padding + this.numBoxesY * this.boxSize
         ) {
-            console.log('Game Over! Snake hit the wall.');
-            return; // Exit if the snake hits the wall
+            this.endGame('Hit Wall');
+            return;
         }
 
-        // Move the snake by adding a new head segment
+        // Check for self-collision
+        for (let i = 1; i < this.snake.length; i++) {
+            const segment = this.snake[i];
+            if (headX === segment.x && headY === segment.y) {
+                this.endGame('Hit Yourself');
+                return;
+            }
+        }
+
+        // Move snake: add a new head and remove the tail
         const newHead = this.add
             .rectangle(headX, headY, this.boxSize, this.boxSize, 0xfeca9b, 1)
             .setOrigin(0);
-        this.snake.unshift(newHead); // Add new head segment to the front of the snake
+        this.snake.unshift(newHead);
 
-        // Remove the last segment of the snake to maintain its length
         const tail = this.snake.pop();
-        tail.destroy(); // Destroy the tail segment
+        tail.destroy();
 
-        // Set moving flag back to false after the move is complete
         this.moving = false;
     }
+
     snakeFood() {
         let foodPosition;
-        const boxSize = this.boxSize; // Size of the food
+        const boxSize = this.boxSize;
 
-        // Calculate the valid range for food positions
-        const minX = 0;
-        const maxX = this.numBoxesX - 1;
-        const minY = 0;
-        const maxY = this.numBoxesY - 1;
-
-        // Generate a random position for the snake food
         do {
-            // Generate random positions for food
             const foodX =
-                Math.floor(Phaser.Math.Between(minX, maxX)) * boxSize + 16;
-
+                Phaser.Math.Between(0, this.numBoxesX - 1) * boxSize +
+                this.padding;
             const foodY =
-                Math.floor(Phaser.Math.Between(minY, maxY)) * boxSize + 16;
+                Phaser.Math.Between(0, this.numBoxesY - 1) * boxSize +
+                this.padding;
 
             foodPosition = { x: foodX, y: foodY };
         } while (
@@ -162,18 +209,58 @@ export default class Game extends Phaser.Scene {
             )
         );
 
-        // Create the snake food at the calculated position, with origin at top-left (0, 0)
-        const food = this.add
-            .rectangle(
-                foodPosition.x,
-                foodPosition.y,
-                boxSize,
-                boxSize,
-                0xffffff,
-                1
-            )
-            .setOrigin(0); // Set origin to top-left
+        if (!foodPosition) {
+            endGame('You Won!');
+        } else {
+            this.food = this.add
+                .rectangle(
+                    foodPosition.x,
+                    foodPosition.y,
+                    boxSize,
+                    boxSize,
+                    0xffffff,
+                    1
+                )
+                .setOrigin(0);
+        }
+    }
 
-        return food;
+    endGame(data) {
+        this.scene.stop('gameBackground');
+        let reason = '';
+
+        if (data === GameState.PlayerWon) {
+            console.log(data);
+            reason = GameState.PlayerWon;
+        } else {
+            reason = data;
+        }
+
+        // Show the game over / win screen
+        this.scene.start('gameOver', {
+            reason: reason,
+        });
+    }
+
+    createPauseButton() {
+        // Pause Button
+        const pauseButton = document.createElement('div');
+        pauseButton.className = 'button';
+        pauseButton.innerText = 'Pause';
+
+        this.add
+            .dom(0, 0, pauseButton, { fontFamily: '"Press Start 2P"' })
+            .addListener('click')
+            .on('click', () => {
+                console.log('Button clicked');
+                this.scene.get('game').scene.pause(); // Pauses the game
+                this.scene.launch('pause');
+            });
+
+        // Ensure the button is dynamically sized and positioned in the top-right corner
+        pauseButton.style.position = 'absolute';
+        pauseButton.style.top = '20px';
+        pauseButton.style.right = '-40px';
+        pauseButton.style.width = 'fit-content';
     }
 }
