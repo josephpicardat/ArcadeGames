@@ -1,6 +1,6 @@
-# Pong Game in React
+# Arcade Games in React
 
-This project is a simple implementation of the classic Pong game built using React. The game features basic paddle and ball physics, scoring, and a win condition. Players can control their paddles using the keyboard and play against each other.
+This project is a simple implementation of the classic arcade games like Pong and Snake built using React. These games are implemented using Phaser.js
 
 ## Table of Contents
 
@@ -52,30 +52,40 @@ This project is a simple implementation of the classic Pong game built using Rea
 
 ## Usage
 
-Once the application is running, players can start playing immediately. The game is controlled using keyboard keys, with each player controlling a paddle on one side of the screen.
+Once the application is running, players can start playing immediately. All games start using the space bar and can be played with the arrow keys. With the eception of Flappy Bird which uses the space bar to fly.
 
 ## Game Controls
 
--   **Player One (Left Side)**:
+-   **Pong**:
 
-    -   Move Up: `W`
-    -   Move Down: `S`
+    -   Move Up: `Up Arrow`
+    -   Move Down: `Down Arrow`
 
--   **Player Two (Right Side)**:
+-   **Snake**:
 
-    -   Move Up: `Arrow Up`
-    -   Move Down: `Arrow Down`
+    -   Move Up: `Up Arrow`
+    -   Move Down: `Down Arrow`
+    -   Move Left: `Left Arrow`
+    -   Move Right: `Right Arrow`
+    -   Pause: `Escape`
 
--   **Pause/Resume the Game**: `Escape`
+-   **Flappy Bird**:
 
--   **Start Game**: Click on the "Start" button if displayed.
+    -   Fly: `Spacebar`
 
 ## Win Condition
 
-The first player to reach 11 points wins the game. When a player wins, an overlay will appear displaying the winning player's name and a "Play again?" button. After 5 seconds, the game will automatically restart.
+-   **Pong**
 
--   **Player One (Left Side)**: Wins if their score reaches 11.
--   **Player Two (Right Side)**: Wins if their score reaches 11.
+    -   When the user scores 11 points they win or lose if the bot scores 11 points.
+
+-   **Snake**
+
+    -   The user wins once they eat all of the food.
+
+-   **Flappy Bird**
+
+    -   There is no winning, just pain.
 
 ## Contributors:
 
@@ -86,6 +96,7 @@ The first player to reach 11 points wins the game. When a player wins, an overla
 -   React: The library used for building the user interface.
 -   Material-UI: Provides UI components and styling.
 -   Vite: A fast build tool and development server that significantly speeds up the development process with fast hot module replacement (HMR) and optimized builds. Vite serves the application with fast, unbundled development and produces highly optimized production builds.
+-   Phaser.js: Library used for building game elements
 
 ## License
 
