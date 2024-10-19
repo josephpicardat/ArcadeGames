@@ -4,6 +4,7 @@ import Display from '../../assets/Display.jpeg';
 import Pong from '../../pages/Pong/Pong';
 import PhaserConfig from '../../pages/PhaserPong/PhaserConfig';
 import SnakeConfig from '../../pages/Snake/SnakeConfig';
+import FlappyBirdConfig from '../../pages/FlappyBird/FlappyBirdConfig';
 
 const routeToMainComponents = {
     '/pong': () => (
@@ -61,6 +62,25 @@ const routeToMainComponents = {
                     'cover' /* Ensure the image covers the entire container */,
             }}>
             <SnakeConfig />
+        </section>
+    ),
+    '/flappybird': () => (
+        <section
+            style={{
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center',
+                height: '100vh',
+                width: '100%',
+                backgroundImage: `url(${Display})`,
+                backgroundRepeat:
+                    'no-repeat' /* Prevent the image from repeating */,
+                backgroundPosition:
+                    'center center' /* Center the image both horizontally and vertically */,
+                backgroundSize:
+                    'cover' /* Ensure the image covers the entire container */,
+            }}>
+            <FlappyBirdConfig />
         </section>
     ),
 

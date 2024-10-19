@@ -98,6 +98,13 @@ const Home = () => {
                         to='/snake'>
                         Snake
                     </MenuItem>
+                    <MenuItem
+                        onClick={handleClose}
+                        disableRipple
+                        component={Link}
+                        to='/flappybird'>
+                        Flappy Bird
+                    </MenuItem>
                 </StyledMenu>
             </div>
         </div>

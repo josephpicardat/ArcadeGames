@@ -29,6 +29,10 @@ const MainRoutes = () => {
                 path='/snake'
                 element={<Layout content='snake' />}
             />
+            <Route
+                path='/flappybird'
+                element={<Layout content='flappybird' />}
+            />
         </Routes>
     );
 };
