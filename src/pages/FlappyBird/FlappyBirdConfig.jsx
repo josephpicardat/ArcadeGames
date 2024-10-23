@@ -5,6 +5,7 @@ import Game from './scenes/Game';
 import GameBackground from './scenes/GameBackground';
 import GameOver from './scenes/GameOver';
 // import PauseScene from '../Snake/scenes/PauseScene';
+import Ground from './scenes/Ground';
 
 const FlappyBirdConfig = () => {
     const containerRef = useRef(null);
@@ -35,12 +36,12 @@ const FlappyBirdConfig = () => {
                 parent: container,
                 width: canvasWidth,
                 height: canvasHeight,
-                scene: [TitleScreen, Game, GameBackground, GameOver],
+                scene: [TitleScreen, Game, GameBackground, Ground, GameOver],
                 transparent: true,
                 physics: {
                     default: 'arcade',
                     arcade: {
-                        debug: true,
+                        // debug: true,
                         gravity: { y: 0 },
                     },
                 },

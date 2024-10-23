@@ -39,6 +39,8 @@ export default class Game extends Phaser.Scene {
         this.scene.run('gameBackground');
         this.scene.sendToBack('gameBackground');
 
+        this.scene.run('ground');
+
         // Get the canvas dimensions
         const canvasWidth = this.cameras.main.width;
         const canvasHeight = this.cameras.main.height;
@@ -53,7 +55,8 @@ export default class Game extends Phaser.Scene {
                 fontSize: '48px',
                 fill: '#fff',
             })
-            .setOrigin(0.25); // Center the text
+            .setOrigin(0.25) // Center the text
+            .setDepth(2);
 
         // Create the bird sprite (using 'bird_up' as the initial frame)
         this.bird = this.physics.add
@@ -218,9 +221,6 @@ export default class Game extends Phaser.Scene {
 
     endGame() {
         if (this.gameState !== GameState.Running) {
-            // Stop the background scene
-            // this.scene.get('background').pause();
-
             // Show the game over / win screen
             this.scene.start('gameOver', {
                 playerScore: this.score, // Send the player's score to the game over scene

@@ -27,6 +27,8 @@ export default class TitleScreen extends Phaser.Scene {
         this.scene.run('gameBackground');
         this.scene.sendToBack('gameBackground');
 
+        this.scene.run('ground');
+        this.scene.bringToTop('ground');
         // Create the bird sprite (using 'bird_up' as the initial frame)
         this.bird = this.add
             .sprite(canvasWidth / 2, canvasHeight / 2, 'bird_up')
