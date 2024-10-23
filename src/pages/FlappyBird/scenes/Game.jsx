@@ -56,12 +56,13 @@ export default class Game extends Phaser.Scene {
                 fill: '#fff',
             })
             .setOrigin(0.25) // Center the text
-            .setDepth(2);
+            .setDepth(1);
 
         // Create the bird sprite (using 'bird_up' as the initial frame)
         this.bird = this.physics.add
             .sprite(canvasWidth / 2, canvasHeight / 2, 'bird_up')
-            .setScale(0.3);
+            .setScale(0.3)
+            .setDepth(2);
 
         // Create the bird flapping animation from the 3 frames
         this.anims.create({
