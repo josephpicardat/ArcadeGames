@@ -7,6 +7,7 @@ const routeToFooter = {
     '/phaserPong': SimpleFooter,
     '/snake': SimpleFooter,
     '/flappybird': SimpleFooter,
+    '/minesweeper': SimpleFooter,
 };
 
 const Footer = () => {

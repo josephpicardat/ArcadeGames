@@ -33,6 +33,10 @@ const MainRoutes = () => {
                 path='/flappybird'
                 element={<Layout content='flappybird' />}
             />
+            <Route
+                path='/minesweeper'
+                element={<Layout content='minesweeper' />}
+            />
         </Routes>
     );
 };

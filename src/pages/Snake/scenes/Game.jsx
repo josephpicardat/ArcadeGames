@@ -61,13 +61,21 @@ export default class Game extends Phaser.Scene {
         const centerX = canvasWidth / 2 - this.boxSize;
         const centerY = canvasHeight / 2 - this.boxSize;
 
+        // Where to position the snake
+        const snakeX =
+            Math.floor((this.numBoxesX - 1) / 2) * this.boxSize + this.padding;
+        const snakeY =
+            Math.floor((this.numBoxesY - 1) / 2) * this.boxSize + this.padding;
+
+        console.log(snakeX, snakeY);
+
         // Initialize the snake with 3 segments
         for (let i = 0; i < 3; i++) {
             this.snake.push(
                 this.add
                     .rectangle(
-                        centerX - this.boxSize * i,
-                        centerY - 8,
+                        snakeX,
+                        snakeY,
                         this.boxSize,
                         this.boxSize,
                         0xfeca9b, // Snake color
@@ -249,7 +257,9 @@ export default class Game extends Phaser.Scene {
         pauseButton.innerText = 'Pause';
 
         this.add
-            .dom(0, 0, pauseButton, { fontFamily: '"Press Start 2P"' })
+            .dom(0, this.padding, pauseButton, {
+                fontFamily: '"Press Start 2P"',
+            })
             .addListener('click')
             .on('click', () => {
                 console.log('Button clicked');
@@ -259,7 +269,7 @@ export default class Game extends Phaser.Scene {
 
         // Ensure the button is dynamically sized and positioned in the top-right corner
         pauseButton.style.position = 'absolute';
-        pauseButton.style.top = '20px';
+        pauseButton.style.top = `${this.padding * 10}`;
         pauseButton.style.right = '-40px';
         pauseButton.style.width = 'fit-content';
     }

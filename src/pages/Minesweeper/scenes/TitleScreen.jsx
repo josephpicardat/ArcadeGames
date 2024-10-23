@@ -12,9 +12,6 @@ export default class TitleScreen extends Phaser.Scene {
     }
 
     create() {
-        this.scene.run('gameBackground');
-        this.scene.sendToBack('gameBackground');
-
         // Get the canvas dimensions
         const canvasWidth = this.cameras.main.width;
         const canvasHeight = this.cameras.main.height;
@@ -23,7 +20,7 @@ export default class TitleScreen extends Phaser.Scene {
         const yPosition1 = canvasHeight * 0.4; // 40% of the height
         const yPosition2 = canvasHeight * 0.6; // 30% of the height
 
-        this.cameras.main.setBackgroundColor('rgba(0, 0, 0, 0.5)');
+        this.cameras.main.setBackgroundColor('rgba(0, 0, 0, 0)');
 
         const title = this.add
             .text(xPosition, yPosition1, 'Snake Game', {

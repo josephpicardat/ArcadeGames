@@ -5,16 +5,11 @@ export default class GameOver extends Phaser.Scene {
         super({ key: 'gameOver' });
     }
     create(data) {
-        this.scene.run('gameBackground');
-        this.scene.sendToBack('gameBackground');
-
         let titleText = data.reason;
 
         // Get the canvas dimensions
         const canvasWidth = this.cameras.main.width;
         const canvasHeight = this.cameras.main.height;
-
-        this.cameras.main.setBackgroundColor('rgba(0, 0, 0, 0.5)');
 
         // Calculate positions based on percentages
         const xPosition = canvasWidth * 0.5; // 50% of the width

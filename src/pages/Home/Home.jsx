@@ -89,7 +89,7 @@ const Home = () => {
                         disableRipple
                         component={Link}
                         to='/phaserPong'>
-                        Phaser Pong
+                        Pong
                     </MenuItem>
                     <MenuItem
                         onClick={handleClose}
@@ -104,6 +104,13 @@ const Home = () => {
                         component={Link}
                         to='/flappybird'>
                         Flappy Bird
+                    </MenuItem>
+                    <MenuItem
+                        onClick={handleClose}
+                        disableRipple
+                        component={Link}
+                        to='/minesweeper'>
+                        Minesweeper
                     </MenuItem>
                 </StyledMenu>
             </div>
