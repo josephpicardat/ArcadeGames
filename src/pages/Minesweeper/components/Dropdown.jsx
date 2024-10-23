@@ -1,8 +1,9 @@
 import { useEffect, useState } from 'react';
 import Box from '@mui/material/Box';
 import InputLabel from '@mui/material/InputLabel';
+import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
-import NativeSelect from '@mui/material/NativeSelect';
+import Select from '@mui/material/Select';
 
 export default function DropdownMenu({ setGameDifficulty }) {
     // Use state to track difficulty
@@ -25,6 +26,7 @@ export default function DropdownMenu({ setGameDifficulty }) {
     }, [difficulty, setGameDifficulty]);
     return (
         <Box
+            className='dropdown-menu'
             sx={{
                 minWidth: 120,
                 position: 'relative', // Ensure relative positioning to control z-index
@@ -34,30 +36,24 @@ export default function DropdownMenu({ setGameDifficulty }) {
                 borderRadius: '4px',
                 boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)', // Add some shadow for better visibility
             }}>
-            <FormControl fullWidth>
-                {/* <InputLabel
-                    variant='standard'
-                    htmlFor='dropdown-container'>
-                    Difficulty
-                </InputLabel> */}
-                <NativeSelect
-                    value={difficulty}
-                    onChange={handleChange}
+            <FormControl
+                variant='filled'
+                fullWidth>
+                <InputLabel id='difficulty-select-label'>Difficulty</InputLabel>
+                <Select
+                    labelId='difficulty-select-label'
+                    id='difficulty-select'
                     inputProps={{
                         name: 'difficulty',
                         id: 'dropdown-container',
                     }}
-                    sx={{
-                        color: '#000', // Dropdown text color
-                        backgroundColor: '#fff', // Dropdown background color
-                        '&:focus': {
-                            backgroundColor: '#fff', // Ensure background stays white on focus
-                        },
-                    }}>
-                    <option value={10}>Easy</option>
-                    <option value={20}>Medium</option>
-                    <option value={30}>Hard</option>
-                </NativeSelect>
+                    value={difficulty}
+                    label='Age'
+                    onChange={handleChange}>
+                    <MenuItem value={10}>Easy</MenuItem>
+                    <MenuItem value={20}>Medium</MenuItem>
+                    <MenuItem value={30}>Hard</MenuItem>
+                </Select>
             </FormControl>
         </Box>
     );

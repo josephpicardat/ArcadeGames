@@ -46,15 +46,7 @@ const SnakeConfig = () => {
                         gravity: { y: 0 },
                     },
                 },
-                // plugins: {
-                //     scene: [
-                //         {
-                //             key: 'rexUI',
-                //             plugin: UIPlugin,
-                //             mapping: 'rexUI',
-                //         },
-                //     ],
-                // },
+
                 scale: {
                     mode: Phaser.Scale.RESIZE,
                     autoCenter: Phaser.Scale.CENTER_BOTH,

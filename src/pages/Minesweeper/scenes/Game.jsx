@@ -9,10 +9,6 @@ const GameState = {
     PlayerLost: 'player-lost',
 };
 
-const COLOR_MAIN = 0x4e342e;
-const COLOR_LIGHT = 0x7b5e57;
-const COLOR_DARK = 0x260e04;
-
 export default class Game extends Phaser.Scene {
     constructor() {
         super({ key: 'game' });
@@ -41,16 +37,16 @@ export default class Game extends Phaser.Scene {
         const worldWidth = this.numBoxesX * this.boxSize;
         const worldHeight = this.numBoxesY * this.boxSize;
 
-        // const canvas = this.add.dom(10, 10).createElement('div');
-        // canvas.setOrigin(0); // Align the div to top-left
-        // canvas.setDepth(999); // Ensure it's on top of everything
-        // canvas.setVisible(true); // Make sure it's visible
-        // canvas.node.id = 'dropdown-container'; // Set an ID for targeting it
+        const canvas = this.add.dom(10, 10).createElement('div');
+        canvas.setOrigin(0); // Align the div to top-left
+        canvas.setDepth(999); // Ensure it's on top of everything
+        canvas.setVisible(true); // Make sure it's visible
+        canvas.node.id = 'dropdown-container'; // Set an ID for targeting it
 
-        // const root = ReactDOM.createRoot(canvas.node); // Use Phaser DOM element
-        // root.render(
-        //     <Dropdown setGameDifficulty={this.setGameDifficulty.bind(this)} />
-        // );
+        const root = ReactDOM.createRoot(canvas.node); // Use Phaser DOM element
+        root.render(
+            <Dropdown setGameDifficulty={this.setGameDifficulty.bind(this)} />
+        );
 
         // Input handling for snake movement
         this.input.keyboard.on('keydown', this.handleKeyDown, this);
