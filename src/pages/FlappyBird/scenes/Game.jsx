@@ -3,8 +3,8 @@ import WebFontFile from '../../PhaserPong/scenes/WebFontFile';
 import wing_up from '../assets/wing_up.png';
 import wing_down from '../assets/wing_down.png';
 import wing_middle from '../assets/wing_middle.png';
-import top_pipe from '../assets/top_pipe.png';
-import bottom_pipe from '../assets/bottom_pipe.png';
+import top_pipe from '../assets/long_pipe_down.png';
+import bottom_pipe from '../assets/long_pipe_up.png';
 
 const GameState = {
     Running: 'running',
@@ -93,7 +93,7 @@ export default class Game extends Phaser.Scene {
 
         // Call `addPipePair` every 1.5 seconds
         this.time.addEvent({
-            delay: 1000, // Time in milliseconds
+            delay: 1500, // Time in milliseconds
             callback: this.addPipePair,
             callbackScope: this,
             loop: true, // Loop to keep adding pipes
@@ -121,22 +121,26 @@ export default class Game extends Phaser.Scene {
                 this.bird.angle = Math.min(this.bird.body.velocity.y * 0.2, 90);
             }
 
-            // Check if any pipes have gone off-screen
+            // Iterate over the pipes to check if the bottom pipe has passed the bird's x-position
             this.pipes.children.iterate((pipe) => {
-                if (pipe) {
-                    // Ensure pipe is defined
-                    if (pipe.x + pipe.width < 0) {
-                        this.pipes.remove(pipe, true, true); // Remove the pipe from the scene
-                    } else if (
-                        pipe.x + pipe.width < this.bird.x &&
-                        !pipe.pair.passed // Check if the pair has been passed
-                    ) {
-                        this.score += 0.5; // Increment score
-                        pipe.pair.passed = true; // Mark the pair as passed
+                if (
+                    pipe &&
+                    !pipe.passed &&
+                    pipe.texture.key === 'pipeBottom' &&
+                    pipe.x < this.bird.x
+                ) {
+                    this.score += 1; // Increment score by 1 when bird passes a bottom pipe
+                    pipe.passed = true; // Mark the pipe as passed
 
-                        // Update the score text display
-                        this.points.setText(this.score);
-                    }
+                    // Update the score display
+                    this.points.setText(this.score);
+                }
+            });
+
+            // Remove pipes that have gone off-screen
+            this.pipes.children.iterate((pipe) => {
+                if (pipe && pipe.x + pipe.width < 0) {
+                    this.pipes.remove(pipe, true, true); // Remove the pipe from the scene
                 }
             });
         }
@@ -151,7 +155,7 @@ export default class Game extends Phaser.Scene {
         const maxPipeHeight = canvasHeight * 0.75 - pipeGap - minPipeHeight; // Maximum height
 
         const pipeTopHeight = Phaser.Math.Between(minPipeHeight, maxPipeHeight);
-        const pipeScale = 2; // Adjust this to make the pipes bigger or smaller
+        const pipeScale = 0.1; // Adjust this to make the pipes bigger or smaller
 
         // Add top pipe
         const topPipe = this.pipes.create(
