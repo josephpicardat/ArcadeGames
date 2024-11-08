@@ -1,41 +1,52 @@
 import Phaser from 'phaser';
+import { createRoot } from 'react-dom/client';
+import MinesweeperGameOver from '../components/MinesweeperGameOver'; // Import your React component
 
-export default class GameOver extends Phaser.Scene {
+class GameOverScene extends Phaser.Scene {
     constructor() {
-        super({ key: 'gameOver' });
+        super({ key: 'GameOver' });
+        this.root = null; // Initialize root
+        this.gameOverContainer = null; // Initialize container
     }
+
     create(data) {
-        let titleText = data.reason;
+        // Create a DOM element to display the game over screen
+        this.gameOverContainer = document.createElement('div');
+        this.gameOverContainer.className = 'gameOverContainer';
+        document.body.appendChild(this.gameOverContainer); // Append the container to the body
 
-        // Get the canvas dimensions
-        const canvasWidth = this.cameras.main.width;
-        const canvasHeight = this.cameras.main.height;
+        // Create a root for rendering the React component
+        this.root = createRoot(this.gameOverContainer);
 
-        // Calculate positions based on percentages
-        const xPosition = canvasWidth * 0.5; // 50% of the width
-        const yPosition1 = canvasHeight * 0.4; // 40% of the height
-        const yPosition2 = canvasHeight * 0.6; // 30% of the height
-
-        this.add
-            .text(xPosition, yPosition1, titleText, {
-                fontFamily: '"Press Start 2P"',
-                fontSize: 48,
-            })
-            .setOrigin(0.5);
-
-        const start = this.add.text(
-            xPosition,
-            yPosition2,
-            'Press Space to Continue',
-            {
-                fontSize: '16px',
-                fontFamily: '"Press Start 2P"',
-            }
+        // Render the MinesweeperGameOver component into the DOM using the root
+        this.root.render(
+            <MinesweeperGameOver
+                timeTaken={data.timeTaken}
+                winCondition={data.winCondition}
+                difficulty={data.difficulty}
+                onRestart={() => this.handleRestart(data.difficulty)} // Pass difficulty to handleRestart
+            />
         );
-        start.setOrigin(0.5, 0.5);
+    }
 
-        this.input.keyboard.on('keydown-SPACE', () => {
-            this.scene.start('titleScreen');
-        });
+    handleRestart = (difficulty) => {
+        // Handle the restart by switching back to the game scene with the difficulty parameter
+        this.root.unmount(); // Unmount the React component
+        document.body.removeChild(this.gameOverContainer);
+        this.scene.start('game', { difficulty }); // Pass difficulty as data
+    };
+
+    shutdown() {
+        // Cleanup the DOM when the scene is shut down
+        const container = document.querySelector('.gameOverContainer');
+        if (container) {
+            console.log('inside container');
+            // Unmount the component and remove the container from the DOM
+            const root = createRoot(container); // Create root to access the component
+            root.unmount(); // Unmount the React component
+            document.body.removeChild(container); // Remove the container
+        }
     }
 }
+
+export default GameOverScene;

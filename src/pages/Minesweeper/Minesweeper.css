@@ -1,5 +1,5 @@
 #dropdown-container {
-    /* Styles for the container */
+    pointer-events: none;
 }
 
 /* If you want to style elements within the dropdown */
@@ -11,4 +11,58 @@
 select {
     color: black;
     background-color: white;
+}
+
+.gameOverContainer {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.timeContainer {
+    width: 300px;
+    height: 225px;
+    margin: 0 auto;
+    border-radius: 8px;
+    text-align: center;
+    background-image: url('https://www.google.com/logos/fnbx/minesweeper/win_screen.png');
+    background-size: cover;
+}
+
+.internalTime {
+    display: inline-block;
+    margin-top: 25px;
+    margin-left: 36px;
+    margin-right: 36px;
+    text-align: center;
+}
+
+.gameOverImages {
+    width: 60px;
+    height: auto;
+    overflow-clip-margin: content-box;
+    overflow: clip;
+}
+
+.timeData {
+    font: 'GameFont', sans-serif;
+    color: white;
+    font-size: 2rem;
+}
+
+.buttonStyle {
+    background: #4a752c;
+    width: 300px;
+    height: 64px;
+    margin: 12px auto;
+    border-radius: 8px;
+    border: none;
+    color: #fff;
+    font-size: 20px;
+    text-align: center;
+    cursor: pointer;
 }

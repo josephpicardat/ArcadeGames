@@ -15,8 +15,6 @@ export default function DropdownMenu({ setGameDifficulty }) {
         setDifficulty(newDifficulty);
     };
 
-    console.log('inside dropdown menu');
-
     // Trigger game difficulty change when dropdown value changes
     useEffect(() => {
         // Call the function to set the game difficulty

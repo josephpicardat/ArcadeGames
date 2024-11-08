@@ -1,15 +1,13 @@
 import { useEffect, useRef } from 'react';
 import Phaser from 'phaser';
-// import TitleScreen from './scenes/TitleScreen';
 import Game from './scenes/Game';
-// import GameBackground from './scenes/GameBackground';
-// import GameOver from './scenes/GameOver';
+import GameBackground from './scenes/GameBackground';
+import GameOver from './scenes/GameOver';
 import PauseScene from './scenes/PauseScene';
-// import UIPlugin from 'phaser3-rex-plugins';
 
 import './Minesweeper.css';
 
-const SnakeConfig = () => {
+const MinesweeperConfig = () => {
     const containerRef = useRef(null);
     const gameRef = useRef(null);
 
@@ -38,7 +36,7 @@ const SnakeConfig = () => {
                 parent: container,
                 width: canvasWidth,
                 height: canvasHeight,
-                scene: [Game, PauseScene],
+                scene: [Game, PauseScene, GameBackground, GameOver],
                 transparent: true,
                 physics: {
                     default: 'arcade',
@@ -86,4 +84,4 @@ const SnakeConfig = () => {
     );
 };
 
-export default SnakeConfig;
+export default MinesweeperConfig;
